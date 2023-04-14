@@ -41,4 +41,4 @@
       synchronize:
         src: /opt/boxfuse/target/*
         dest: /opt/tomcat/webapps/
-        delegate_to: "slave-one"
+        delegate_to: slave-one
