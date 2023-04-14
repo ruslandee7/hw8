@@ -19,11 +19,6 @@
     - name: Make war file
       command: mvn package -f /opt/boxfuse/pom.xml
 
-    - name: Copying war file
-      synchronize:
-        src: /opt/boxfuse/target/*
-        dest: /opt/tomcat/webapps/
-        delegate_to: slave-two
 - name: Install tomcat
   hosts: web
   become: yes
@@ -39,3 +34,8 @@
         name: tomcat9
         enabled: yes
         state: started
+    - name: Copying war file
+      synchronize:
+        src: /opt/boxfuse/target/*
+        dest: /opt/tomcat/webapps/
+        delegate_to: slave-one
