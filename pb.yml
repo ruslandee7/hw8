@@ -1,0 +1,41 @@
+---
+- name: Install maven and git
+  hosts: backend
+  become: yes
+
+  tasks:
+    - name: Ensure maven is present
+      apt:
+        name: maven
+        state: present
+    - name: Ensure git is present
+      apt:
+        name: git
+        state: present
+    - name: Clone a repo from git
+      git:
+        repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+        dest: /opt/boxfuse/
+    - name: Make war file
+      command: mvn -f /opt/boxfuse*/pom.xml package
+
+    - name: Copying war file
+      synchronize:
+        src: /opt/boxfuse*/target/*
+        dest: /opt/tomcat/webapps/
+        delegate_to: slave-two
+- name: Install tomcat
+  hosts: web
+  become: yes
+
+  tasks:
+    - name: Ensure tomcat is installed
+      apt:
+        name: tomcat9
+        state: present
+    - name: Ensure tomcat service is enabled and started
+
+      service:
+        name: tomcat9
+        enabled: yes
+        state: started
