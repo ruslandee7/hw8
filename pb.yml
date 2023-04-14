@@ -17,11 +17,11 @@
         repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
         dest: /opt/boxfuse/
     - name: Make war file
-      command: mvn -f /opt/boxfuse*/pom.xml package
+      command: mvn package -f /opt/boxfuse/pom.xml
 
     - name: Copying war file
       synchronize:
-        src: /opt/boxfuse*/target/*
+        src: /opt/boxfuse/target/*
         dest: /opt/tomcat/webapps/
         delegate_to: slave-two
 - name: Install tomcat
