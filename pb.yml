@@ -8,10 +8,12 @@
       apt:
         name: maven
         state: present
+
     - name: Ensure git is present
       apt:
         name: git
         state: present
+
     - name: Clone a repo from git
       git:
         repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
@@ -28,12 +30,13 @@
       apt:
         name: tomcat9
         state: present
-    - name: Ensure tomcat service is enabled and started
 
+    - name: Ensure tomcat service is enabled and started
       service:
         name: tomcat9
         enabled: yes
         state: started
+
     - name: Copying war file
       synchronize:
         src: /opt/boxfuse/target/*
