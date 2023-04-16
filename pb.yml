@@ -20,7 +20,9 @@
         dest: /opt/boxfuse/
     - name: Make war file
       command: mvn package -f /opt/boxfuse/pom.xml
-
+    - name: Copying war file to Ansible host
+      copy: /opt/boxfuse/target
+      dest: ./temp/
 - name: Install tomcat
   hosts: web
   become: yes
@@ -38,7 +40,6 @@
         state: started
 
     - name: Copying war file
-      synchronize:
-        src: /opt/boxfuse/target/*
+      copy:
+        src: ./temp/*
         dest: /opt/tomcat/webapps/
-        delegate_to: slave-two
