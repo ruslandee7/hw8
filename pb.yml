@@ -44,6 +44,6 @@
 
     - name: Copying war file from local to web
       synchronize:
-        mode: pull
+        mode: push
         src: /tmp/hello*
         dest: /var/lib/tomcat9/webapps/
