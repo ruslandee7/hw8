@@ -46,4 +46,4 @@
       synchronize:
         mode: pull
         src: /tmp/hello*
-        dest: /opt/tomcat9/webapps/
+        dest: /var/lib/tomcat9/webapps/
