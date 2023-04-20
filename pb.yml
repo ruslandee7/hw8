@@ -20,6 +20,11 @@
         dest: /opt/boxfuse/
     - name: Make war file
       command: mvn package -f /opt/boxfuse/pom.xml
+    - name: Copyimg war file from backend to local
+      synchronize:
+        mode: pull
+        src: /opt/boxfuse/target/*
+        dest: /tmp/warfile/
 
 - name: Install tomcat
   hosts: web
@@ -37,8 +42,8 @@
         enabled: yes
         state: started
 
-    - name: Copying war file
+    - name: Copyimg war file from local to web
       synchronize:
-        src: /opt/boxfuse/target/*
-        dest: /opt/tomcat/webapps/
-        delegate_to: slave-two
+        mode: pull
+        src: /tmp/warfile/*
+        dest: /opt/tomcat9/webapps/
