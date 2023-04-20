@@ -37,8 +37,14 @@
         enabled: yes
         state: started
 
-    - name: Copying war file
+    - name: Copying war file from backend to local
       synchronize:
+        mode: pull
         src: /opt/boxfuse/target/*
-        dest: /opt/tomcat/webapps/
-        delegate_to: slave-two
+        dest: /tmp/warfile/
+
+    - name: Copying war file from local to web
+      synchronize:
+        mode: push
+        src: /tmp/warfile/*
+        dest: /opt/tomcat9/webapps/
